@@ -1,0 +1,15 @@
+/* ========== HIDE THE '+ NEW' GALLERY BUTTON ========== 
+.notion-gallery-view
+  .notion-selectable.notion-collection_view-block
+  > [role='button'],
+.notion-gallery-view
+  .notion-selectable.notion-collection_view_page-block
+  > [role='button'] {
+  display: none !important;
+}
+*/
+
+/* ========== HIDE '+ NEW' TABLE ROW ========== */
+.notion-table-view-add-row {
+  display: none !important;
+}
