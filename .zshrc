@@ -1,61 +1,88 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH 
+
+# Import colorscheme from 'wal' asynchronously
+# &   # Run the process in the background.
+# ( ) # Hide shell job control messages.
+# Not supported in the "fish" shell.
+(cat ~/.cache/wal/sequences &)
+
+# Alternative (blocks terminal for 0-3ms)
+cat ~/.cache/wal/sequences
+
+# To add support for TTYs this line can be optionally added.
+source ~/.cache/wal/colors-tty.sh
 
 # Path to your oh-my-zsh installation.
-ZSH=/usr/share/oh-my-zsh/
+#installation via script from github
+#export ZSH="/home/$USER/.oh-my-zsh"
+#installation via paru -S oh-my-zsh-git
+export ZSH=/usr/share/oh-my-zsh/
 
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-
+# if you installed the package oh-my-zsh-powerline-theme-git then you type here "powerline" as zsh theme
 ZSH_THEME="marco"
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to enable command auto-correction.
+HYPHEN_INSENSITIVE="true"
 ENABLE_CORRECTION="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
 HIST_STAMPS="dd/mm/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 plugins=(git)
 plugins=(archlinux)
 plugins=(zsh-autosuggestions)
-puglins=(rvm)
-
-# User configuration
-neofetch
-
-#If you come from bash you might have to change your $PATH.
-export EDITOR='nvim'
-export ARCHFLAGS="-arch x86_64"
-export MANPATH="/usr/local/man:$MANPATH"
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export NVM_DIR=~/.nvm
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-
-ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
-if [[ ! -d $ZSH_CACHE_DIR ]]; then
-  mkdir $ZSH_CACHE_DIR
-fi
 
 source $ZSH/oh-my-zsh.sh
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+setopt GLOB_DOTS
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+export HISTCONTROL=ignoreboth:erasedups
+
+# Make nano the default editor
+
+export EDITOR='nvim'
+export VISUAL='nvim'
+
+export ARCHFLAGS="-arch x86_64"
+#PS1='[\u@\h \W]\$ '
+
+if [ -d "$HOME/.bin" ] ;
+  then PATH="$HOME/.bin:$PATH"
+fi
+
+if [ -d "$HOME/.local/bin" ] ;
+  then PATH="$HOME/.local/bin:$PATH"
+fi
+
+# Custom aliases have been extracted to their own file for easier management.
+if [ -f ~/.aliases ]; then
+    . ~/.aliases
+fi
+
+#shopt
+#shopt -s autocd # change to named directory
+#shopt -s cdspell # autocorrects cd misspellings
+#shopt -s cmdhist # save multi-line commands in history as single line
+#shopt -s dotglob
+#shopt -s histappend # do not overwrite history
+#shopt -s expand_aliases # expand aliases
+
+# reporting tools - install when not installed
+# install neofetch
+neofetch
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+export PATH=$PATH:/home/kueks/.local/share/gem/ruby/3.0.0/bin
+export PATH=$PATH:/root/.local/share/gem/ruby/3.0.0/bin
+eval "$(rbenv init -)"
+source /usr/share/nvm/init-nvm.sh
+
+if command -v wal > /dev/null 2>&1 && [ "$TERM" = "alacritty" ]; then
+    wal -Rqe
+fi
