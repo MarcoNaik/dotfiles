@@ -31,7 +31,6 @@ ENABLE_CORRECTION="true"
 HIST_STAMPS="dd/mm/yyyy"
 plugins=(git)
 plugins=(archlinux)
-plugins=(zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
